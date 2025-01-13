@@ -59,6 +59,12 @@ record(void)
 					perror("read error");
 					return 2;
 				}
+
+				if (event.type == EV_KEY && event.code == KEY_ESC && event.value == 1) {
+					fprintf(stderr, "Warning: ESC key pressed\n");
+					return 0;
+				}
+
 				if (write(out_fd, &i, sizeof(i)) != sizeof(i)) {
 					perror("device write error");
 					return 3;
@@ -67,9 +73,9 @@ record(void)
 					perror("event write error");
 					return 4;
 				}
-
-//				printf("input %d, time %ld.%06ld, type %d, code %d, value %d\n", i,
-//						event.time.tv_sec, event.time.tv_usec, event.type, event.code, event.value);
+				
+				//printf("input %d, time %ld.%06ld, type %d, code %d, value %d\n", i,
+				//		event.time.tv_sec, event.time.tv_usec, event.type, event.code, event.value);
 			}
 		}
 	}
